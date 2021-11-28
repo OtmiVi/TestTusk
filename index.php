@@ -33,14 +33,14 @@ if(isset($_POST)){
         <input type="submit" name="import" value="Import">
     </form>
 
-    <?if( Loger::GetUpdateCount() > 0):?>
-        <p>Has been updated: <?= Loger::GetUpdateCount() ?> </p>
+    <?php if( Loger::GetUpdateCount() > 0):?>
+        <p>Has been updated: <?php echo Loger::GetUpdateCount() ?> </p>
     <?endif;?>
-    <?if( Loger::GetDeleteCount() > 0):?>
-        <p>Has been deleted: <?= Loger::GetDeleteCount() ?> </p>
-    <?endif;?>
-    <?if( Loger::GetAddCount() > 0):?>
-        <p>Has been added: <?= Loger::GetAddCount() ?> </p>
+    <?php if( Loger::GetDeleteCount() > 0):?>
+        <p>Has been deleted: <?php echo Loger::GetDeleteCount() ?> </p>
+    <?php endif;?>
+    <?php if( Loger::GetAddCount() > 0):?>
+        <p>Has been added: <?php echo Loger::GetAddCount() ?> </p>
     <?endif;?>
 
     <?php
@@ -59,16 +59,16 @@ if(isset($_POST)){
             </tr>
         </thead>
         <tbody>
-            <?foreach($content as $row):?>
+            <?php foreach($content as $row):?>
             <tr>
                 <th scope="row"><?=$row['uid']?></th>
-                <td><?=$row['firstName']?></td>
-                <td><?=$row['lastName']?></td>
-                <td><?=$row['birthDay']?></td>
-                <td><?=$row['dateChange']?></td>
-                <td><?=$row['description']?></td>
+                <td><?php echo $row['firstName']?></td>
+                <td><?php echo $row['lastName']?></td>
+                <td><?php echo $row['birthDay']?></td>
+                <td><?php echo $row['dateChange']?></td>
+                <td><?php echo $row['description']?></td>
             </tr>
-            <?endforeach;?>
+            <?php endforeach;?>
         </tbody>
     </table>
     
