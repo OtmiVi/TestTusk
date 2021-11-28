@@ -6,8 +6,7 @@ include_once 'scr/Loger.php';
 
 if(isset($_POST)){
     if($_FILES['data']['size'] > 0){
-        $importFile = $_FILES['data']['tmp_name'];
-        $importFile = fopen($importFile, 'r');
+        $importFile = $_FILES;
         $csv = new CSVController($importFile);
         $csvContent = $csv->GetUsersData();
 

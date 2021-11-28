@@ -6,17 +6,22 @@ class CSVController
     private $errorMassage;
     private $usersData = [];
 
-    public function __construct($importFile)
+    public function __construct($file)
     {
-        $columnsTitles = fgetcsv($importFile, 1000, ';');
-        if($this->isColumnsCorrect($columnsTitles)){
-            while($data = fgetcsv($importFile, 1000, ';')){
-                $this->usersData[] = $data;
+        $importFile = $file['data']['tmp_name'];
+        if($this->isCSVFile($file)){
+            $importFile = fopen($importFile, 'r');
+            $columnsTitles = fgetcsv($importFile, 1000, ';');
+            if($this->isColumnsCorrect($columnsTitles)){
+                while($data = fgetcsv($importFile, 1000, ';')){
+                    $this->usersData[] = $data;
+                }
+            }else{
+                echo $this->errorMassage;
             }
-        }else{
             echo $this->errorMassage;
+            fclose($importFile);
         }
-
     }
 
     /**
@@ -34,7 +39,7 @@ class CSVController
      * @return bool
      */
     private function isColumnsCorrect($columns){
-        $correctColums = include_once "config/correctColums.php"; //const
+        $correctColums = include_once "config/correctColums.php";
         
         if(count($columns) == count($correctColums)){
             for($i = 0; $i <= count($correctColums); $i++){
@@ -46,6 +51,16 @@ class CSVController
             return true;
         }else{
             $this->errorMassage = "Incprrect table";
+            return false;
+        }
+    }
+
+    private function isCSVFile($file){
+        $isCorrectType = $file['data']['type'] == "application/vnd.ms-excel";
+        if($isCorrectType){
+            return true;
+        }else{
+            $this->errorMassage = "Incprrect file type";
             return false;
         }
     }
